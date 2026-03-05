@@ -13,6 +13,7 @@ export interface Property {
   description?: string;
   amenities?: string[];
   gallery?: string[];
+  rera?: string;
 }
 
 export const properties: Property[] = [
@@ -25,6 +26,7 @@ export const properties: Property[] = [
     specs: { beds: 3, area: "2,400 sqft" },
     image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=1935&auto=format&fit=crop",
     category: "High-Rise",
+    rera: "P51900012345",
     description: "The Obsidian Tower is a masterpiece of modern architecture, soaring above the Mumbai skyline. Each residence offers panoramic views of the Arabian Sea and the city's vibrant landscape. Designed for the discerning few, it features bespoke interiors and world-class amenities.",
     amenities: ["Infinity Pool", "Private Cinema", "Sky Lounge", "24/7 Concierge", "State-of-the-art Gym"],
     gallery: [
@@ -42,6 +44,7 @@ export const properties: Property[] = [
     specs: { beds: 5, area: "5,200 sqft" },
     image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2070&auto=format&fit=crop",
     category: "Waterfront",
+    rera: "P51900067890",
     description: "Azure Bay Residences redefine luxury waterfront living. Located on the iconic Marine Drive, these homes offer an unparalleled connection to the sea. With expansive terraces and floor-to-ceiling windows, every day feels like a vacation.",
     amenities: ["Private Dock", "Wine Cellar", "Spa & Wellness Center", "Valet Parking", "Smart Home Integration"],
     gallery: [
@@ -58,6 +61,7 @@ export const properties: Property[] = [
     specs: { beds: 6, area: "8,500 sqft" },
     image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=2070&auto=format&fit=crop",
     category: "Sustainable",
+    rera: "DLRERA2024045",
     description: "Nestled in the heart of Lutyens' Delhi, Veridian Grove is a sanctuary of peace and sustainability. These expansive villas are built with eco-friendly materials and feature lush private gardens, blending heritage with modern green living.",
     amenities: ["Solar Power", "Rainwater Harvesting", "Organic Garden", "Yoga Pavilion", "Library"],
     gallery: [
@@ -74,6 +78,7 @@ export const properties: Property[] = [
     specs: { beds: 2, area: "1,400 sqft" },
     image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=2070&auto=format&fit=crop",
     category: "Lofts",
+    rera: "P51800034567",
     description: "The Quartz Lofts offer a unique industrial-chic living experience in the heart of Bandra. With double-height ceilings and open-plan layouts, these lofts are perfect for the creative urbanite.",
     amenities: ["Rooftop Barbecue", "Art Studio", "Pet Park", "Co-working Space", "High-speed Internet"],
     gallery: [
@@ -89,6 +94,7 @@ export const properties: Property[] = [
     specs: { beds: 4, area: "3,800 sqft" },
     image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=2071&auto=format&fit=crop",
     category: "High-Rise",
+    rera: "HRERA1252024",
     description: "Elysian Heights is the pinnacle of luxury in Gurgaon. Located on the prestigious Golf Course Road, it offers residents exclusive access to a world of luxury, including a private golf simulator and a temperature-controlled pool.",
     amenities: ["Golf Simulator", "Heated Pool", "Business Center", "Kids Play Area", "Tennis Court"],
     gallery: [
@@ -104,6 +110,7 @@ export const properties: Property[] = [
     specs: { beds: 4, area: "4,500 sqft" },
     image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=2070&auto=format&fit=crop",
     category: "Waterfront",
+    rera: "PRGO11242345",
     description: "Experience the ultimate beachside lifestyle at Solstice Villas. These Mediterranean-inspired villas in Candolim offer direct beach access and private pools, making every moment a celebration of the sun and sea.",
     amenities: ["Direct Beach Access", "Private Pool", "Outdoor Kitchen", "Sun Deck", "Security"],
     gallery: [

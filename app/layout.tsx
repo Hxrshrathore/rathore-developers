@@ -3,6 +3,9 @@ import { Geist } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
+import { FloatingCTA } from '@/components/FloatingCTA';
+import { ExitIntentPopup } from '@/components/ExitIntentPopup';
+import { siteConfig } from '@/lib/config';
 
 const geist = Geist({
   subsets: ['latin'],
@@ -10,8 +13,8 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  title: 'Rathore Developers - Iconic Living',
-  description: 'Premium real estate developer specializing in modern, sustainable, and luxury residential projects.',
+  title: `${siteConfig.name} - ${siteConfig.slogan}`,
+  description: siteConfig.description,
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
@@ -21,6 +24,8 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <Navbar />
         {children}
         <Footer />
+        <FloatingCTA />
+        <ExitIntentPopup />
       </body>
     </html>
   );

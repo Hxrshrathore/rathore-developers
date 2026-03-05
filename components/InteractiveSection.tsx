@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import Image from "next/image"
+import Link from "next/link"
 import { motion, AnimatePresence } from "motion/react"
 import { Plus } from "lucide-react"
 
@@ -9,7 +10,7 @@ const tabs = [
   {
     id: 'exterior',
     label: 'Architecture',
-    image: 'https://picsum.photos/seed/architecture/1920/1080',
+    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2075&auto=format&fit=crop',
     hotspots: [
       { top: '40%', left: '30%', label: 'Sustainable Facade' },
       { top: '70%', left: '60%', label: 'Smart Entrance' },
@@ -19,7 +20,7 @@ const tabs = [
   {
     id: 'interior',
     label: 'Living Spaces',
-    image: 'https://picsum.photos/seed/interior-luxury/1920/1080',
+    image: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=2070&auto=format&fit=crop',
     hotspots: [
       { top: '50%', left: '50%', label: 'Smart Home Integration' },
       { top: '30%', left: '20%', label: 'Floor-to-Ceiling Glass' }
@@ -28,7 +29,7 @@ const tabs = [
   {
     id: 'amenities',
     label: 'Amenities',
-    image: 'https://picsum.photos/seed/amenities/1920/1080',
+    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=2070&auto=format&fit=crop',
     hotspots: [
       { top: '45%', left: '45%', label: 'Infinity Pool' }
     ]
@@ -108,10 +109,10 @@ export function InteractiveSection() {
       </div>
 
       <div className="absolute bottom-12 left-6 z-20">
-        <button className="group flex items-center gap-3 bg-black text-white px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300">
+        <Link href="/properties" className="group flex items-center gap-3 bg-black text-white px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300">
           <div className="w-2 h-2 rounded-full bg-white group-hover:bg-black transition-colors" />
           Explore Our Homes
-        </button>
+        </Link>
       </div>
     </section>
   )

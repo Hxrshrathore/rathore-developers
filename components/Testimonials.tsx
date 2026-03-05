@@ -7,14 +7,40 @@ import { Star, ArrowLeft, ArrowRight } from "lucide-react"
 
 const testimonials = [
   {
-    text: "Rathore Developers redefined our expectations of luxury. The attention to detail in the Obsidian Tower is simply unparalleled.",
-    author: "Emma R.",
-    role: "Resident, Obsidian Tower"
+    quote: "The attention to detail is unprecedented. Rathore doesn't just build homes; they craft legacies. The concierge service at The Obsidian is exactly what I needed.",
+    author: "Vivek T.",
+    role: "Tech Founder",
+    property: "The Obsidian Tower"
   },
   {
-    text: "Investing in Azure Bay was the best decision for our family. The integration of smart technology and sustainable design is world-class.",
-    author: "Daniel M.",
-    role: "Owner, Azure Bay Villa"
+    quote: "As an NRI investor, transparency is my top priority. The entire purchasing process, from virtual tours to RERA documentation, was absolutely flawless and secure.",
+    author: "Dr. Ananya P.",
+    role: "NRI Investor, London",
+    property: "Azure Bay Residences"
+  },
+  {
+    quote: "Sustainable luxury isn't just a buzzword here. The solar integration and rainwater harvesting at Veridian Grove run seamlessly without compromising the 5-star lifestyle.",
+    author: "Rajeev M.",
+    role: "Corporate CEO",
+    property: "Veridian Grove"
+  },
+  {
+    quote: "The double-height ceilings and raw material finishes in The Quartz Lofts perfectly capture that New York industrial vibe I was looking for right here in Mumbai.",
+    author: "Priya S.",
+    role: "Creative Director",
+    property: "The Quartz Lofts"
+  },
+  {
+    quote: "From the private golf simulator to the smart-home integration, Elysian Heights is lightyears ahead of anything else available in Gurgaon right now.",
+    author: "Amit K.",
+    role: "Hedge Fund Manager",
+    property: "Elysian Heights"
+  },
+  {
+    quote: "Moving our family into Solstice Villas was the best decision. The private beach access and the tight security give us complete peace of mind.",
+    author: "Neha R.",
+    role: "Fashion Entrepreneur",
+    property: "Solstice Villas"
   }
 ]
 
@@ -26,7 +52,7 @@ export function Testimonials() {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 opacity-50">
         <Image 
-          src="https://picsum.photos/seed/testi-bg-luxury/1920/1080" 
+          src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=2070&auto=format&fit=crop" 
           alt="Background" 
           fill
           className="object-cover"
@@ -52,7 +78,7 @@ export function Testimonials() {
               animate={{ opacity: 1, y: 0 }}
               className="text-xl sm:text-2xl md:text-3xl font-medium text-white leading-tight italic"
             >
-              “{testimonials[current].text}”
+              “{testimonials[current].quote}”
             </motion.p>
 
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 sm:gap-0">

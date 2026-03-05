@@ -39,10 +39,28 @@ export function PropertyGrid() {
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute top-6 left-6">
-                  <span className="bg-black text-white px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest">
+                <div className="absolute top-6 left-6 flex flex-col gap-2 z-10">
+                  <span className={`px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest backdrop-blur-md border ${
+                    prop.status === 'Limited Units' 
+                      ? 'bg-amber-500/90 text-white border-amber-400/50 shadow-[0_0_15px_rgba(245,158,11,0.5)] animate-[pulse_2s_ease-in-out_infinite]' 
+                      : prop.status === 'Coming Soon' 
+                        ? 'bg-blue-500/90 text-white border-blue-400/50'
+                        : prop.status === 'Pre-Launch'
+                          ? 'bg-purple-500/90 text-white border-purple-400/50'
+                          : 'bg-black/50 text-white border-white/20'
+                  }`}>
                     {prop.status}
                   </span>
+                  
+                  {/* Social Proof / FOMO Badge */}
+                  {(idx === 0 || idx === 2) && (
+                    <span className="px-3 py-1.5 rounded-full text-[9px] font-bold uppercase tracking-widest bg-white/90 text-red-600 backdrop-blur-md shadow-lg flex items-center gap-1.5 w-fit">
+                      <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse relative">
+                        <span className="absolute inset-0 rounded-full bg-red-500 animate-ping opacity-75"></span>
+                      </span>
+                      {idx === 0 ? "2 Units Left" : "High Demand"}
+                    </span>
+                  )}
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>

@@ -37,7 +37,7 @@ export function ServicesSection() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
         <div className="relative aspect-video lg:aspect-[4/5] rounded-[32px] md:rounded-[40px] overflow-hidden">
           <Image
-            src="https://picsum.photos/seed/services-luxury/800/1000"
+            src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=2070&auto=format&fit=crop"
             alt="Service visual"
             fill
             className="object-cover"

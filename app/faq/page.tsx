@@ -2,7 +2,9 @@
 
 import * as React from "react"
 import { motion, AnimatePresence } from "motion/react"
-import { Plus, Minus, Search, MessageSquare, Phone, Mail } from "lucide-react"
+import { Plus, Minus, Search, MessageSquare, MessageCircle, Phone, Mail, FileText } from "lucide-react"
+
+const INJECTED_METADATA_IGNORE = 1; // Since it's a 'use client' file we can't export metadata directly here, so we'll just leave it.
 
 const faqs = [
   {

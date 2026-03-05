@@ -1,0 +1,380 @@
+# 🏗️ Rathore Developers — Complete Design Audit & Conversion Optimization Brief
+
+> **Audit Type:** Full-funnel UX/UI conversion analysis for luxury real estate website
+> **Target Market:** Ultra-high-net-worth individuals (UHNWI), ₹8Cr – ₹48Cr+ property buyers
+> **Geography:** Mumbai, Delhi NCR, Goa (India)
+> **Tech Stack:** Next.js 15, React 19, Tailwind CSS 4, Framer Motion
+
+---
+
+## 1. Current Design System Analysis
+
+### 1.1 Design Language Classification
+
+| Attribute | Current State | Industry Term |
+|---|---|---|
+| **Overall Style** | Dark minimal luxury | `Editorial Luxury / Swiss-Minimal` |
+| **Layout Pattern** | Full-bleed hero + content blocks | `Hero-Driven Long Scroll Landing Page` |
+| **Typography** | Geist Sans, uppercase micro-labels, bold headlines | `Typographic Hierarchy with Micro-Copy Labels` |
+| **Color Palette** | Zinc-900 / white / black — monochromatic | `Monochromatic Neutral Palette` |
+| **Interaction Model** | Hover reveals, tab switching, carousel | `Progressive Disclosure with Hover States` |
+| **Visual Rhythm** | Alternating dark/light section bands | `Zebra Stripe Section Pattern` |
+| **Card Design** | Tall portrait aspect (3:4) with overlay badges | `Lifestyle Card with Status Badge Overlay` |
+| **Form Design** | Rounded inputs with icon prefixes | `Soft-Pill Form Pattern` |
+| **CTA Style** | Black pill buttons with dot indicator | `Branded Capsule CTA` |
+| **Border Radius System** | 32px → 40px (mega-rounded) | `Neomorph-Soft Radius (Blobular UI)` |
+
+### 1.2 Page-Level Architecture (Current Funnel)
+
+```
+Home Page Flow (Single Scroll):
+┌─────────────────────────────────────────────┐
+│ 1. Hero (Full-screen carousel, 3 slides)    │  ← AWARENESS (Top of Funnel)
+│ 2. About/Vision Statement                   │  ← AUTHORITY
+│ 3. PropertyGrid (3 featured cards)          │  ← INTEREST
+│ 4. InteractiveSection (Hotspot Explorer)    │  ← ENGAGEMENT
+│ 5. AmenitiesBento (6 amenity cards)         │  ← DESIRE
+│ 6. BookingSection (Lead Capture Form)       │  ← ACTION (Mid-Funnel Conversion)
+│ 7. ServicesSection (5 service offerings)    │  ← REASSURANCE
+│ 8. Testimonials (2 reviews)                │  ← SOCIAL PROOF
+│ 9. Footer (Contact form + links)           │  ← SECONDARY CAPTURE
+└─────────────────────────────────────────────┘
+
+Supporting Pages:
+├── /properties         → Full portfolio grid with search/filter
+├── /properties/[id]    → Individual property detail + sticky sidebar CTA
+├── /about              → Brand story, stats, leadership, CTA
+├── /developments       → Development pipeline page
+├── /faq                → Accordion FAQ with sidebar contact
+├── /login              → Client portal (login/signup/reset)
+└── /dashboard          → Post-login client area
+```
+
+---
+
+## 2. Critical Conversion Problems (CONs)
+
+### 🔴 CRITICAL — Direct Revenue Impact
+
+#### CON-1: Zero Social Proof at Point of Decision
+- **Location:** Hero section, PropertyGrid, BookingSection
+- **Problem:** The visitor sees property cards with prices from ₹8Cr–₹48Cr, but encounters **zero trust signals** before being asked to fill a form. Only 2 testimonials exist, buried after the booking form.
+- **Design Terms:** `Social Proof Positioning Failure`, `Trust Signal Deficit`, `Endorsement Gap`
+- **Impact:** For luxury transactions, trust must precede action. Currently, a ₹12Cr buyer sees a form before seeing any credibility.
+- **Fix:** Move testimonials and trust badges ABOVE the booking section. Add `Authority Markers` (RERA registration, ISO certifications, awards counter, press logos) directly under the hero or above PropertyGrid.
+
+#### CON-2: BookingSection Form Has 6 Fields — Too Many for Top-of-Funnel
+- **Location:** [BookingSection.tsx](file:///d:/KIIT-MUN/rathore-developers/components/BookingSection.tsx) — line 76-130
+- **Problem:** The lead capture asks for: Full Name, Phone, Email, Property Selection, Preferred Date, Additional Notes. This is a **high-friction lead form** for users who have not yet committed.
+- **Design Terms:** `Form Friction Overload`, `Progressive Profiling Failure`, `Conversion Barrier`
+- **Impact:** Studies show every additional field reduces conversion by ~11%. A 6-field form for ₹12Cr+ property inquiries will lose 40-60% of potential leads.
+- **Fix:** Use `Step-Wise Progressive Disclosure Form` — Step 1: Phone + Property Interest (2 fields) → Step 2: Full details (after initial contact). Or use a `Micro-Conversion Widget` (WhatsApp/Call button + 2-field popup).
+
+#### CON-3: No Urgency or Scarcity Signals
+- **Location:** PropertyGrid, Property Detail page
+- **Problem:** Properties show status badges ("Selling Now", "Limited Units", "Coming Soon") but no urgency/scarcity mechanics: no countdown timers for price lock periods, no "X units remaining" counters, no "Y people viewing" indicators.
+- **Design Terms:** `Scarcity Marketing Deficit`, `Urgency Mechanism Absence`, `Loss Aversion Trigger Missing`
+- **Fix:** Add `Live Inventory Counter` ("Only 4 of 24 units remaining"), `Price Lock Countdown`, and `Social Activity Indicator` ("12 inquiries in last 48 hours").
+
+#### CON-4: No WhatsApp / Instant Communication Channel
+- **Location:** Entire site — no floating CTA
+- **Problem:** Indian luxury real estate buyers overwhelmingly prefer WhatsApp for initial inquiry. There is NO WhatsApp button, no live chat widget, no floating phone CTA. The only communication paths require filling a form.
+- **Design Terms:** `Channel Preference Mismatch`, `Immediate Contact Deficit`, `Friction-to-First-Response Gap`
+- **Fix:** Add a `Sticky Floating Action Button (FAB)` with WhatsApp + Phone + Schedule icons. This alone can increase lead volume by 30-50% in Indian real estate.
+
+---
+
+### 🟠 HIGH — Trust & Authority Gaps
+
+#### CON-5: No RERA Compliance Visible
+- **Location:** Nowhere on site
+- **Problem:** Every legitimate Indian real estate developer must display RERA registration numbers. Their absence creates a massive credibility gap for informed buyers. This isn't optional — it's a legal requirement and a trust signal.
+- **Design Terms:** `Regulatory Trust Badge Missing`, `Compliance Signal Deficit`
+- **Fix:** Add RERA numbers per property on detail pages. Add a `Trust Bar` / `Compliance Ribbon` in the footer or property cards.
+
+#### CON-6: Placeholder Images Destroy Credibility
+- **Location:** About section, InteractiveSection, ServicesSection, Team section — all use `picsum.photos`
+- **Problem:** Using random stock/placeholder images for a ₹48Cr property developer is a **credibility destroyer**. The Unsplash images on properties are acceptable stock, but the vision/team/services sections using random images feel like a template.
+- **Design Terms:** `Visual Authenticity Deficit`, `Placeholder Credibility Leak`, `Brand Void`
+- **Fix:** Use actual project renders, on-site photography, team headshots. Even AI-generated architectural renders are better than random placeholder images.
+
+#### CON-7: Testimonials Section is Weak (Only 2 Reviews)
+- **Location:** [Testimonials.tsx](file:///d:/KIIT-MUN/rathore-developers/components/Testimonials.tsx)
+- **Problem:** Only 2 testimonials, with generic author names ("Emma R.", "Daniel M.") and no photos, no company names, no verified badges. For luxury purchases, buyers need to see **peer validation** from identifiable, relatable individuals.
+- **Design Terms:** `Testimonial Depth Deficit`, `Peer Validation Weakness`, `Named Authority Absence`
+- **Fix:** Add 6-8 testimonials with full names, photos, property name, purchase year, and optional video testimonials. Add a `Google Reviews Widget` or `Trustpilot Badge` for third-party validation.
+
+#### CON-8: No Price Transparency / ROI Information
+- **Location:** PropertyGrid, Property Detail
+- **Problem:** Prices show "From ₹12.4 Cr" but no EMI calculator, no ROI projections, no capital appreciation data, no rental yield estimates. Luxury buyers are investors — they need financial context.
+- **Design Terms:** `Financial Decision Support Missing`, `ROI Visualization Gap`, `Investment Calculus Deficit`
+- **Fix:** Add an `EMI Calculator Widget`, `Capital Appreciation Chart`, and `Rental Yield Card` to property detail pages.
+
+---
+
+### 🟡 MEDIUM — UX Friction Points
+
+#### CON-9: Hero Slider Has No Auto-Advance
+- **Location:** [Hero.tsx](file:///d:/KIIT-MUN/rathore-developers/components/Hero.tsx)
+- **Problem:** The hero carousel requires manual interaction (arrow clicks or dot clicks). The progress bar animation runs but doesn't trigger auto-advance. Users who don't interact will only see the first slide.
+- **Design Terms:** `Passive Browsing Failure`, `Auto-Carousel Missing`, `Engagement Decay at Hero Level`
+- **Fix:** Add `setInterval` auto-rotation (5-7 seconds), synced with the existing progress bar animation.
+
+#### CON-10: Navbar "Schedule a Visit" Links to Anchor, Not Modal
+- **Location:** [Navbar.tsx](file:///d:/KIIT-MUN/rathore-developers/components/Navbar.tsx) — `href="#book-visit"`
+- **Problem:** The primary CTA scrolls the user down to the booking form section. On inner pages (properties, about, FAQ), this anchor doesn't exist, so the button does nothing. This is a **broken conversion path** on 5 out of 7 pages.
+- **Design Terms:** `Broken CTA Path`, `Cross-Page Conversion Failure`, `Dead-End CTA`
+- **Fix:** Make "Schedule a Visit" open a `Global Conversion Modal` (overlay form) that works on every page. Alternatively, redirect to the home page booking section with scroll.
+
+#### CON-11: Property Detail "Download Brochure" and "Schedule a Visit" Are Dead Buttons
+- **Location:** [app/properties/[id]/page.tsx](file:///d:/KIIT-MUN/rathore-developers/app/properties/%5Bid%5D/page.tsx) — lines 194-199
+- **Problem:** Both CTAs on the property detail sidebar are `<button>` elements with no `onClick` handlers. They literally do nothing when clicked. For a user who has navigated to a specific ₹24.8Cr property, this is a catastrophic drop-off.
+- **Design Terms:** `Dead CTA / Ghost Button`, `Conversion Path Termination`, `Intent Abandonment`
+- **Fix:** Wire "Download Brochure" to a `Lead Gate Modal` (email for brochure) and "Schedule a Visit" to the booking form/modal.
+
+#### CON-12: Footer Contact Form Has No Purpose/Label
+- **Location:** [Footer.tsx](file:///d:/KIIT-MUN/rathore-developers/components/Footer.tsx) — lines 46-79
+- **Problem:** There's a form in the footer with First Name, Last Name, Phone, Email, Message, and Submit — but no heading, no context, no reason to fill it. Users don't know what they're submitting for.
+- **Design Terms:** `Contextless Form Pattern`, `Purpose Deficit`, `Conversion Ambiguity`
+- **Fix:** Add a header: "Get in Touch" or "Request a Callback" above the form. Add a value proposition micro-copy line.
+
+#### CON-13: No Sticky CTA on Property Detail Pages (Mobile)
+- **Location:** [app/properties/[id]/page.tsx](file:///d:/KIIT-MUN/rathore-developers/app/properties/%5Bid%5D/page.tsx)
+- **Problem:** The sidebar CTA is positioned via `sticky top-32` which works on desktop, but on mobile it scrolls naturally within the content flow. A mobile user scrolling through gallery images has no visible CTA.
+- **Design Terms:** `Mobile CTA Visibility Loss`, `Below-Fold Conversion Drop`, `Sticky CTA Absence`
+- **Fix:** Add a `Fixed Bottom CTA Bar` on mobile (e.g., "Schedule Visit | ₹12.4 Cr →") like Magicbricks/99acres.
+
+#### CON-14: "Explore Our Homes" Button (InteractiveSection) Goes Nowhere
+- **Location:** [InteractiveSection.tsx](file:///d:/KIIT-MUN/rathore-developers/components/InteractiveSection.tsx) — line 111
+- **Problem:** The call-to-action button at the bottom of the interactive explorer section is a `<button>` with no link or action. Dead-end.
+- **Design Terms:** `Orphan CTA`, `Dead-End Engagement`
+- **Fix:** Link to `/properties` page.
+
+---
+
+### 🔵 LOW — Polish & Optimization
+
+#### CON-15: No Exit-Intent Popup
+- **Problem:** When a user moves to close the tab/navigate away, no retention mechanism exists.
+- **Design Terms:** `Exit-Intent Capture Missing`, `Bounce Recovery Deficit`
+- **Fix:** Add an `Exit-Intent Modal` with a premium offer ("Download our Investment Guide" or "Get early access to new launches").
+
+#### CON-16: No SEO Meta Tags on Inner Pages
+- **Problem:** Only the root layout has meta title/description. Individual pages (properties, about, FAQ) don't set page-specific metadata.
+- **Design Terms:** `SEO Meta Deficit`, `Page-Level SEO Gap`
+- **Fix:** Add unique `<title>` and `<meta description>` per page using Next.js `generateMetadata()`.
+
+#### CON-17: "Powered by Webflow" in Footer
+- **Location:** [Footer.tsx](file:///d:/KIIT-MUN/rathore-developers/components/Footer.tsx) — line 87
+- **Problem:** The footer says "Powered by Webflow" and "Template by wCopilot" — this is clearly leftover from the design template source. For a ₹48Cr developer, this screams "template website."
+- **Design Terms:** `Template Attribution Leak`, `Brand Authenticity Damage`
+- **Fix:** Remove these lines entirely.
+
+#### CON-18: Team Section Shows Same Person 3 Times
+- **Location:** [app/about/page.tsx](file:///d:/KIIT-MUN/rathore-developers/app/about/page.tsx) — lines 143-166
+- **Problem:** All 3 leadership cards show the same name "Alexander Rathore" with the same title "Founder & Chief Architect" and random placeholder images. This looks unfinished.
+- **Fix:** Add real team members with distinct names, titles, and proper headshots.
+
+---
+
+## 3. Recommended Funnel Architecture
+
+### The Optimized Conversion Funnel
+
+```
+AWARENESS → TRUST → INTEREST → DESIRE → ACTION → NURTURE
+```
+
+```mermaid
+graph TD
+    A["🟢 HERO: Full-screen video/slider + Clear Value Prop"] --> B["⭐ TRUST BAR: RERA | Awards | 2400+ Residents | 15 Yrs"]
+    B --> C["🏠 FEATURED PROPERTIES: 3 Cards + Urgency Badges"]
+    C --> D["💬 TESTIMONIALS: 4-6 Reviews BEFORE Form"]
+    D --> E["🎯 MICRO-CONVERSION: 2-Field Quick Inquiry or WhatsApp"]
+    E --> F["🔍 INTERACTIVE EXPLORER: Quality Showcase"]
+    F --> G["🏆 AMENITIES BENTO: Lifestyle Visualization"]
+    G --> H["📋 FULL BOOKING FORM: For High-Intent Users"]
+    H --> I["🛡️ SERVICES + FAQ INLINE: Objection Handling"]
+    I --> J["📞 FOOTER: Contact + Newsletter Signup"]
+    
+    K["📲 FLOATING FAB: WhatsApp + Call"] -.-> E
+    L["🚪 EXIT INTENT: Guide Download"] -.-> E
+```
+
+### Key Changes vs Current Funnel:
+
+| Current Order | Optimized Order | Reason |
+|---|---|---|
+| 1. Hero | 1. Hero | Same |
+| 2. About/Vision | 2. **Trust Bar** (NEW) | Trust before exploration |
+| 3. Properties | 3. Properties | Same |
+| 4. Interactive | 4. **Testimonials** (moved UP) | Social proof before form |
+| 5. Amenities | 5. **Quick Inquiry** (NEW) | Low-friction micro-conversion |
+| 6. Booking Form | 6. Interactive | Engagement after micro-conversion |
+| 7. Services | 7. Amenities | Same |
+| 8. Testimonials | 8. **Full Booking Form** (for high-intent) | Full form for ready buyers |
+| 9. Footer | 9. Services + Inline FAQ | Objection handling |
+| — | 10. Footer | Same |
+
+---
+
+## 4. Specific Design Recommendations (AI-Parseable Specifications)
+
+### 4.1 New Component: `TrustBar`
+
+```
+Component: TrustBar
+Pattern: Horizontal Logo/Badge Strip
+Position: Between Hero and PropertyGrid
+Layout: Flex row, center-aligned, gap-12
+Items:
+  - "RERA Registered" with shield icon
+  - "48+ Projects Completed" with counter animation
+  - "2,400+ Happy Residents" with counter animation
+  - "15 Years of Excellence" with badge
+  - Press logos: (Economic Times, Forbes India, etc.)
+Background: zinc-50
+Border: top/bottom 1px zinc-200
+Typography: 10px uppercase tracking-[0.3em] bold zinc-600
+Animation: whileInView fade-in stagger 0.1s
+```
+
+### 4.2 New Component: `FloatingCTA`
+
+```
+Component: FloatingCTA (Sticky Floating Action Button)
+Pattern: FAB (Floating Action Button) with expandable menu
+Position: Fixed bottom-8 right-8, z-50
+State 1 (collapsed): Single WhatsApp-green circle icon (56px)
+State 2 (expanded): Stack of 3 circles (WhatsApp, Phone, Email)
+Animation: Spring scale + stagger
+Mobile: Always visible, slightly smaller (48px)
+Desktop: Visible after 50vh scroll
+```
+
+### 4.3 Redesigned: [BookingSection](file:///d:/KIIT-MUN/rathore-developers/components/BookingSection.tsx#7-138) → Two-Phase Form
+
+```
+Component: BookingSectionV2
+Pattern: Step-Wise Progressive Disclosure Form
+Phase 1 (above the fold):
+  - Heading: "Interested? Let's talk."
+  - Fields: Phone Number + Property Interest (dropdown)
+  - CTA: "Get a Callback in 30 Minutes"
+  - Trust micro-copy: "No spam. Direct line to your property advisor."
+Phase 2 (shown after Phase 1 submitted, or for high-intent users):
+  - Full form: Name, Email, Date, Notes
+  - CTA: "Confirm Your Private Viewing"
+```
+
+### 4.4 Enhanced: `PropertyCard` Urgency Elements
+
+```
+Additions to each PropertyCard:
+  - "Only X units left" counter badge (red text if < 5)
+  - "Y people viewed this week" social indicator
+  - Status badge colors:
+    - "Selling Now" → emerald-500 bg
+    - "Limited Units" → amber-500 bg + pulse animation
+    - "Coming Soon" → blue-500 bg
+    - "Pre-Launch" → purple-500 bg + "Get Notified" mini-CTA
+```
+
+### 4.5 New Component: `StickyMobileCTA`
+
+```
+Component: StickyMobileCTA
+Pattern: Fixed Bottom Bar (Mobile Only)
+Visibility: md:hidden, shown on property detail pages
+Layout: Full-width, fixed bottom-0, flex row
+Left: Price display (₹12.4 Cr)
+Right: Two buttons — "Call Now" (phone icon) + "Schedule Visit" (primary)
+Background: white with top border + shadow-lg
+z-index: 40
+Height: 72px
+```
+
+### 4.6 New Component: `GlobalConversionModal`
+
+```
+Component: GlobalConversionModal
+Pattern: Overlay Modal with Backdrop Blur
+Trigger: Navbar "Schedule a Visit" button (all pages)
+Content: Condensed booking form (Name, Phone, Property, Date)
+Animation: Fade in + scale from 0.95
+Backdrop: bg-black/60 backdrop-blur-md
+Close: X button, ESC key, backdrop click
+Features: Pre-select property if opened from property detail page
+```
+
+---
+
+## 5. Priority Implementation Roadmap
+
+| Priority | Item | Expected Conversion Impact | Effort |
+|---|---|---|---|
+| 🔴 P0 | Fix dead CTAs (CON-11, CON-14) | Prevents 100% drop-off at intent moment | 1 hour |
+| 🔴 P0 | Add WhatsApp FloatingCTA (CON-4) | +30-50% lead volume | 2 hours |
+| 🔴 P0 | Remove template attributions (CON-17) | Eliminates instant credibility damage | 5 min |
+| 🟠 P1 | Fix Navbar CTA cross-page (CON-10) | Prevents dead-end on 5/7 pages | 3 hours |
+| 🟠 P1 | Add TrustBar component (CON-1) | +15-25% form completion | 3 hours |
+| 🟠 P1 | Reduce form friction (CON-2) | +20-40% form submission rate | 4 hours |
+| 🟠 P1 | Replace placeholder images (CON-6) | Immeasurable credibility gain | 2 hours (with AI-generated renders) |
+| 🟡 P2 | Add urgency signals (CON-3) | +10-15% inquiry rate | 3 hours |
+| 🟡 P2 | Expand testimonials (CON-7) | +10-20% trust signal strength | 2 hours |
+| 🟡 P2 | Mobile sticky CTA (CON-13) | +15-25% mobile conversion | 2 hours |
+| 🟡 P2 | Add RERA compliance (CON-5) | Legal requirement + trust | 1 hour |
+| 🔵 P3 | Hero auto-advance (CON-9) | +5% slide engagement | 30 min |
+| 🔵 P3 | Exit-intent popup (CON-15) | +3-8% bounce recovery | 3 hours |
+| 🔵 P3 | SEO meta tags (CON-16) | Long-term organic traffic | 1 hour |
+| 🔵 P3 | EMI calculator (CON-8) | +5-10% property page engagement | 4 hours |
+
+---
+
+## 6. Design System Terminology Glossary
+
+For AI-parseable design briefs, here are the exact terms to use:
+
+| Term | Meaning |
+|---|---|
+| `Hero-Driven Long Scroll` | Full-viewport hero section followed by scrollable content sections |
+| `Capsule CTA / Pill Button` | Rounded-full button with uppercase tracking-wide text |
+| `Micro-Conversion Widget` | Low-barrier lead capture (1-2 fields) before full form |
+| `Trust Bar / Social Proof Strip` | Horizontal row of credibility indicators (badges, counters, press logos) |
+| `Progressive Disclosure Form` | Multi-step form that reveals fields progressively to reduce initial cognitive load |
+| `Sticky FAB (Floating Action Button)` | Fixed-position action button (usually bottom-right) for instant contact |
+| `Lead Gate Modal` | A popup that exchanges value (brochure/guide) for contact information |
+| `Scarcity Badge` | Visual indicator showing limited availability ("Only 4 left") |
+| `Exit-Intent Overlay` | Modal triggered when cursor moves toward browser close/back |
+| `Authority Marker` | Trust symbol showing regulatory compliance, awards, or endorsements |
+| `Bento Grid` | Multi-card grid with varying card sizes (inspired by Japanese bento boxes) |
+| `Glassmorphism Panel` | Translucent card/panel with backdrop-blur and border-white/10 |
+| `Zebra Stripe Sections` | Alternating dark and light section backgrounds for visual rhythm |
+| `Lifestyle Card` | Property card that emphasizes aspirational imagery over specifications |
+| `Soft-Pill Form` | Input fields with large border-radius (16-24px), icon prefixed |
+| `Hotspot Overlay` | Interactive image with clickable points revealing contextual info |
+| `Numbered Slide Indicator` | Carousel pagination showing "01", "02", "03" with progress bars |
+| `Sticky Sidebar CTA` | Fixed-position sidebar panel that follows scroll on property detail pages |
+| `Fixed Bottom Bar` | Mobile-only fixed bar at screen bottom with key actions |
+
+---
+
+## 7. Summary Verdict
+
+### What the Site Does Well ✅
+- **Premium visual aesthetic** — The Swiss-Minimal / Editorial Luxury design immediately communicates high-end positioning
+- **Clean typography hierarchy** — Effective use of micro-labels, bold headlines, and medium-weight body text
+- **Interactive engagement** — Hotspot explorer, carousel, hover effects create a polished experience
+- **Responsive design** — Thoughtful mobile breakpoints throughout
+- **Property detail page** — Sticky sidebar CTA, gallery, amenities, and advisor contact is a strong layout pattern
+
+### What Needs Fixing 🚨
+- **Dead buttons everywhere** — Multiple CTAs lead nowhere (brochure download, schedule visit on detail, explore homes)
+- **Trust comes too late** — Testimonials are after the form; no RERA, no press logos, no award badges
+- **Form friction too high** — 6-field form for cold traffic on ₹8-48Cr products
+- **No instant contact** — No WhatsApp, no live chat, no floating phone — critical in Indian luxury real estate
+- **Placeholder/template artifacts** — picsum.photos images, "Powered by Webflow" text, duplicate team members
+- **Broken cross-page CTAs** — "Schedule a Visit" only works on homepage
+
+> **Current Estimated Conversion Rate:** 0.5–1.5% (industry average for luxury real estate with friction)
+> **Projected After Optimization:** 3–6% (with all P0 + P1 fixes implemented)

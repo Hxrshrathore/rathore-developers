@@ -8,18 +8,20 @@ import { BookingSection } from "@/components/BookingSection";
 import { ServicesSection } from "@/components/ServicesSection";
 import { Testimonials } from "@/components/Testimonials";
 import { Footer } from "@/components/Footer";
+import { TrustBar } from "@/components/TrustBar";
 
 export default function Home() {
   return (
     <main className="min-h-screen">
       <Hero />
+      <TrustBar />
       <About />
       <PropertyGrid />
       <InteractiveSection />
       <AmenitiesBento />
+      <Testimonials />
       <BookingSection />
       <ServicesSection />
-      <Testimonials />
     </main>
   );
 }

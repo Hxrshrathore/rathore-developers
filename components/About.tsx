@@ -35,7 +35,7 @@ export function About() {
           className="relative aspect-video sm:aspect-[4/3] rounded-[32px] md:rounded-[40px] overflow-hidden"
         >
           <Image
-            src="https://picsum.photos/seed/developer-vision/1200/900"
+            src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2075&auto=format&fit=crop"
             alt="Luxury development vision"
             fill
             className="object-cover"

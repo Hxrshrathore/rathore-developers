@@ -2,8 +2,7 @@
 
 import { motion } from "motion/react"
 import Image from "next/image"
-import { ArrowRight, Award, Shield, Leaf, Users } from "lucide-react"
-
+import { MapPin, Globe, Shield, Leaf, HeartHandshake, Eye, Award, Users } from "lucide-react"
 const stats = [
   { label: "Completed Projects", value: "48+" },
   { label: "Happy Residents", value: "2,400+" },
@@ -72,7 +71,7 @@ export default function AboutPage() {
             className="relative aspect-square rounded-[40px] overflow-hidden shadow-2xl shadow-zinc-200"
           >
             <Image
-              src="https://picsum.photos/seed/about-hero/1200/1200"
+              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop"
               alt="Architectural Vision"
               fill
               className="object-cover"
@@ -141,7 +140,23 @@ export default function AboutPage() {
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[1, 2, 3].map((i) => (
+          {[
+            {
+              name: "Alexander Rathore",
+              role: "Founder & Chief Architect",
+              img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop"
+            },
+            {
+              name: "Sarah Jenkins",
+              role: "VP of Global Sales",
+              img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop"
+            },
+            {
+              name: "Michael Chen",
+              role: "Director of Engineering",
+              img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=800&auto=format&fit=crop"
+            }
+          ].map((leader, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
@@ -150,17 +165,17 @@ export default function AboutPage() {
               transition={{ delay: i * 0.1 }}
               className="group"
             >
-              <div className="relative aspect-[4/5] rounded-[40px] overflow-hidden mb-6">
+              <div className="relative aspect-[4/5] rounded-[40px] overflow-hidden mb-6 bg-zinc-100">
                 <Image
-                  src={`https://picsum.photos/seed/leader-${i}/800/1000`}
-                  alt="Leader"
+                  src={leader.img}
+                  alt={leader.name}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                   referrerPolicy="no-referrer"
                 />
               </div>
-              <h3 className="text-xl font-bold text-zinc-900">Alexander Rathore</h3>
-              <p className="text-zinc-500 text-sm font-bold uppercase tracking-widest mt-1">Founder & Chief Architect</p>
+              <h3 className="text-xl font-bold text-zinc-900">{leader.name}</h3>
+              <p className="text-zinc-500 text-sm font-bold uppercase tracking-widest mt-1">{leader.role}</p>
             </motion.div>
           ))}
         </div>
@@ -170,13 +185,13 @@ export default function AboutPage() {
       <section className="px-6 max-w-7xl mx-auto">
         <div className="bg-zinc-900 rounded-[60px] p-12 md:p-24 text-center space-y-8 relative overflow-hidden">
           <div className="absolute inset-0 opacity-20">
-            <Image
-              src="https://picsum.photos/seed/cta-bg/1920/1080"
-              alt="Background"
-              fill
-              className="object-cover"
-              referrerPolicy="no-referrer"
-            />
+              <Image
+                src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=2070&auto=format&fit=crop"
+                alt="Background"
+                fill
+                className="object-cover"
+                referrerPolicy="no-referrer"
+              />
           </div>
           <div className="relative z-10 space-y-8">
             <h2 className="text-4xl md:text-7xl font-bold text-white tracking-tight leading-none">

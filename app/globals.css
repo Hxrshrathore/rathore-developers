@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+@theme {
+  /* Brand Kit mapping to custom CSS Variables */
+  --color-primary: var(--brand-primary);
+  --color-primary-hover: var(--brand-primary-hover);
+  --color-primary-light: var(--brand-primary-light);
+
+  --color-accent: var(--brand-accent);
+}
+
+:root {
+  /* Brand Kit - Change colors here to update site-wide */
+  --brand-primary: #10b981; /* Emerald 500 */
+  --brand-primary-hover: #059669; /* Emerald 600 */
+  --brand-primary-light: #d1fae5; /* Emerald 100 */
+
+  --brand-accent: #f59e0b; /* Amber 500 */
+}

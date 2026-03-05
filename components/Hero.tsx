@@ -11,11 +11,25 @@ export function Hero() {
   const [current, setCurrent] = React.useState(0)
   const slides = properties.slice(0, 3)
 
-  const next = () => setCurrent((prev) => (prev + 1) % slides.length)
+  const [isHovered, setIsHovered] = React.useState(false)
+
+  const nextSlide = () => setCurrent((prev) => (prev + 1) % slides.length)
   const prev = () => setCurrent((prev) => (prev - 1 + slides.length) % slides.length)
 
+  React.useEffect(() => {
+    if (isHovered) return
+    const interval = setInterval(() => {
+      nextSlide()
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [current, isHovered, slides.length])
+
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-zinc-900">
+    <section
+      className="relative h-screen w-full overflow-hidden bg-zinc-900"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <AnimatePresence mode="wait">
         <motion.div
           key={current}
@@ -93,7 +107,7 @@ export function Hero() {
             <button onClick={prev} className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all">
               <ArrowLeft size={18} />
             </button>
-            <button onClick={next} className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all">
+            <button onClick={nextSlide} className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all">
               <ArrowRight size={18} />
             </button>
           </div>

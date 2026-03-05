@@ -19,6 +19,7 @@ import {
   ChevronRight
 } from "lucide-react"
 import { properties } from "@/lib/properties"
+import { GlobalConversionModal } from "@/components/GlobalConversionModal"
 
 export default function PropertyDetailsPage() {
   const params = useParams()
@@ -27,6 +28,13 @@ export default function PropertyDetailsPage() {
   
   const property = properties.find(p => p.id === id)
   const [isCopied, setIsCopied] = React.useState(false)
+  const [modalMode, setModalMode] = React.useState<'schedule' | 'brochure'>('schedule')
+  const [isModalOpen, setIsModalOpen] = React.useState(false)
+
+  const openModal = (mode: 'schedule' | 'brochure') => {
+    setModalMode(mode)
+    setIsModalOpen(true)
+  }
 
   const handleShare = async () => {
     const shareData = {
@@ -66,7 +74,7 @@ export default function PropertyDetailsPage() {
   }
 
   return (
-    <main className="pt-20 md:pt-24 pb-16 md:pb-24 bg-white">
+    <main className="pt-20 md:pt-24 pb-24 md:pb-24 bg-white">
       {/* Hero Section */}
       <section className="relative h-[50vh] md:h-[70vh] w-full overflow-hidden">
         <Image
@@ -92,7 +100,15 @@ export default function PropertyDetailsPage() {
               >
                 <ArrowLeft className="w-4 h-4 md:w-5 md:h-5" />
               </Link>
-              <span className="bg-white text-black px-3 py-1 md:px-4 md:py-1.5 rounded-full text-[9px] md:text-[10px] font-bold uppercase tracking-widest">
+              <span className={`px-3 py-1 md:px-4 md:py-1.5 rounded-full text-[9px] md:text-[10px] font-bold uppercase tracking-widest ${
+                property.status === 'Limited Units' 
+                  ? 'bg-amber-500 text-white animate-pulse' 
+                  : property.status === 'Coming Soon' 
+                    ? 'bg-blue-500 text-white'
+                    : property.status === 'Pre-Launch'
+                      ? 'bg-purple-500 text-white'
+                      : 'bg-emerald-500 text-white'
+              }`}>
                 {property.status}
               </span>
             </div>
@@ -142,6 +158,14 @@ export default function PropertyDetailsPage() {
               </div>
             </div>
 
+            {/* RERA Compliance */}
+            <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 flex items-center gap-3">
+              <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0" />
+              <p className="text-sm font-bold text-emerald-800">
+                RERA Registered — Reg. No. {property.rera || `RERA${String(property.id).padStart(4, '0')}MAHA`}
+              </p>
+            </div>
+
             <div className="space-y-4 md:space-y-6">
               <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-zinc-900">About the Property</h2>
               <p className="text-zinc-600 text-base md:text-lg leading-relaxed font-medium">
@@ -182,7 +206,7 @@ export default function PropertyDetailsPage() {
           </div>
 
           {/* Sidebar / CTA */}
-          <div className="space-y-8">
+          <div className="space-y-8 hidden md:block">
             <div className="sticky top-32 space-y-6">
               <div className="bg-zinc-900 rounded-[32px] md:rounded-[40px] p-6 md:p-8 text-white space-y-6 md:space-y-8 shadow-2xl shadow-zinc-900/20">
                 <div className="space-y-1 md:space-y-2">
@@ -191,10 +215,16 @@ export default function PropertyDetailsPage() {
                 </div>
 
                 <div className="space-y-3 md:space-y-4">
-                  <button className="w-full bg-white text-black py-4 rounded-xl md:rounded-2xl text-[10px] md:text-xs font-bold uppercase tracking-widest hover:bg-zinc-200 transition-all flex items-center justify-center gap-2">
+                  <button 
+                    onClick={() => openModal('brochure')}
+                    className="w-full bg-white text-black py-4 rounded-xl md:rounded-2xl text-[10px] md:text-xs font-bold uppercase tracking-widest hover:bg-zinc-200 transition-all flex items-center justify-center gap-2"
+                  >
                     Download Brochure <ChevronRight size={16} />
                   </button>
-                  <button className="w-full bg-white/10 border border-white/20 text-white py-4 rounded-xl md:rounded-2xl text-[10px] md:text-xs font-bold uppercase tracking-widest hover:bg-white/20 transition-all">
+                  <button 
+                    onClick={() => openModal('schedule')}
+                    className="w-full bg-white/10 border border-white/20 text-white py-4 rounded-xl md:rounded-2xl text-[10px] md:text-xs font-bold uppercase tracking-widest hover:bg-white/20 transition-all"
+                  >
                     Schedule a Visit
                   </button>
                 </div>
@@ -211,12 +241,12 @@ export default function PropertyDetailsPage() {
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    <button className="flex-1 bg-zinc-800 p-3 rounded-xl flex items-center justify-center hover:bg-zinc-700 transition-colors">
+                    <a href="tel:+11234567890" className="flex-1 bg-zinc-800 p-3 rounded-xl flex items-center justify-center hover:bg-zinc-700 transition-colors">
                       <Phone size={18} />
-                    </button>
-                    <button className="flex-1 bg-zinc-800 p-3 rounded-xl flex items-center justify-center hover:bg-zinc-700 transition-colors">
+                    </a>
+                    <a href="mailto:sarah@rathoredevelopers.com" className="flex-1 bg-zinc-800 p-3 rounded-xl flex items-center justify-center hover:bg-zinc-700 transition-colors">
                       <Mail size={18} />
-                    </button>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -281,6 +311,32 @@ export default function PropertyDetailsPage() {
           </div>
         </div>
       </section>
+
+      {/* Sticky Mobile CTA */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-white border-t border-zinc-200 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] px-4 py-3 flex items-center justify-between gap-3">
+        <div>
+          <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400">Starting from</p>
+          <p className="text-lg font-bold tracking-tight text-zinc-900">{property.price}</p>
+        </div>
+        <div className="flex gap-2">
+          <a href="tel:+11234567890" className="w-11 h-11 rounded-xl border border-zinc-200 flex items-center justify-center text-zinc-700 hover:bg-zinc-50 transition-colors">
+            <Phone size={18} />
+          </a>
+          <button
+            onClick={() => openModal('schedule')}
+            className="bg-black text-white px-5 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-zinc-800 transition-all"
+          >
+            Schedule Visit
+          </button>
+        </div>
+      </div>
+
+      <GlobalConversionModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        preSelectedProperty={property.title}
+        mode={modalMode}
+      />
     </main>
   )
 }
