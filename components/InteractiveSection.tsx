@@ -81,7 +81,7 @@ export function InteractiveSection() {
               onClick={() => setActiveTab(tab.id)}
               className={`px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-500 flex items-center gap-2 ${
                 activeTab === tab.id 
-                  ? 'bg-primary text-white shadow-[0_0_20px_rgba(var(--brand-primary-rgb),0.3)]' 
+                  ? 'bg-white text-zinc-950 shadow-[0_0_20px_rgba(255,255,255,0.3)]' 
                   : 'text-white/50 hover:text-white hover:bg-white/5'
               }`}
             >
@@ -129,7 +129,7 @@ export function InteractiveSection() {
               
               <div className="absolute left-14 opacity-0 group-hover:opacity-100 transition-all duration-500 sm:-translate-x-4 sm:group-hover:translate-x-0 pointer-events-none whitespace-nowrap z-30">
                 <div className="bg-black/90 backdrop-blur-xl text-white text-[10px] font-black uppercase tracking-widest px-6 py-3 rounded-xl border border-white/10 shadow-2xl flex items-center gap-3">
-                  <div className="w-1 h-4 bg-primary rounded-full" />
+                  <div className="w-1 h-4 bg-white rounded-full" />
                   {spot.label}
                 </div>
               </div>
@@ -146,9 +146,9 @@ export function InteractiveSection() {
             Hover over the <span className="text-white">pulsing markers</span> to discover the intricate details of our architectural philosophy.
           </p>
         </div>
-        <Link href="/properties" className="group flex items-center gap-4 bg-primary text-white px-10 py-5 rounded-full text-xs font-black uppercase tracking-widest hover:bg-primary-hover transition-all duration-500 shadow-2xl shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-1">
+        <Link href="/properties" className="group flex items-center gap-4 bg-white text-zinc-950 px-10 py-5 rounded-full text-xs font-black uppercase tracking-widest hover:bg-zinc-200 transition-all duration-500 shadow-2xl shadow-white/10 hover:shadow-white/20 hover:-translate-y-1">
           Explore Our Homes
-          <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-primary transition-colors">
+          <div className="w-8 h-8 rounded-full bg-black/10 flex items-center justify-center group-hover:bg-zinc-950 group-hover:text-white transition-colors">
             <Plus size={14} className="group-hover:rotate-90 transition-transform duration-500" />
           </div>
         </Link>

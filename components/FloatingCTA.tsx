@@ -37,7 +37,7 @@ export function FloatingCTA() {
       icon: <MessageCircle size={20} />,
       label: "WhatsApp",
       href: `https://wa.me/${siteConfig.contact.whatsapp}?text=Hi%2C%20I%27m%20interested%20in%20${encodeURIComponent(siteConfig.name)}%20properties.`,
-      color: "bg-primary text-white hover:bg-primary-hover",
+      color: "bg-[#25D366] text-white hover:bg-[#128C7E]",
     },
   ]
 
@@ -73,7 +73,7 @@ export function FloatingCTA() {
         className={`w-14 h-14 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 ${
           isExpanded
             ? 'bg-zinc-900 text-white shadow-zinc-900/30'
-            : 'bg-primary text-white shadow-primary/30 hover:bg-primary-hover'
+            : 'bg-white text-zinc-950 shadow-black/10 hover:bg-zinc-100'
         }`}
       >
         <motion.div

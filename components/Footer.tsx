@@ -117,7 +117,7 @@ export function Footer() {
                 rows={4}
                 className="w-full bg-transparent border-b border-white/20 py-4 focus:border-white outline-none transition-colors text-sm resize-none"
               />
-              <button className="w-full bg-primary hover:bg-primary-hover text-white py-5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest transition-colors shadow-lg shadow-primary/30">
+              <button className="w-full bg-white hover:bg-zinc-200 text-black py-5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest transition-colors shadow-lg shadow-white/10">
                 Submit
               </button>
             </form>

@@ -16,7 +16,11 @@ import {
   Heart,
   Phone,
   Mail,
-  ChevronRight
+  ChevronRight,
+  Calculator,
+  TrendingUp,
+  IndianRupee,
+  Info
 } from "lucide-react"
 import { properties } from "@/lib/properties"
 import { GlobalConversionModal } from "@/components/GlobalConversionModal"
@@ -30,6 +34,9 @@ export default function PropertyDetailsPage() {
   const [isCopied, setIsCopied] = React.useState(false)
   const [modalMode, setModalMode] = React.useState<'schedule' | 'brochure'>('schedule')
   const [isModalOpen, setIsModalOpen] = React.useState(false)
+  const [loanPercent, setLoanPercent] = React.useState(70)
+  const [loanYears, setLoanYears] = React.useState(20)
+  const [interestRate, setInterestRate] = React.useState(8.5)
 
   const openModal = (mode: 'schedule' | 'brochure') => {
     setModalMode(mode)
@@ -203,6 +210,291 @@ export default function PropertyDetailsPage() {
                 </div>
               </div>
             )}
+
+            {/* ─── Financial Decision Support ─── */}
+            {(() => {
+              // Parse price like "From ₹12.4 Cr" → 12.4
+              const priceMatch = property.price.match(/([\d.]+)/)
+              const basePriceCr = priceMatch ? parseFloat(priceMatch[1]) : 10
+              const basePriceLakh = basePriceCr * 100 // 1 Cr = 100 Lakh
+              const basePriceRs = basePriceCr * 1_00_00_000
+
+              // EMI Calculation
+              const loanAmount = basePriceRs * (loanPercent / 100)
+              const downPayment = basePriceRs - loanAmount
+              const monthlyRate = interestRate / 100 / 12
+              const totalMonths = loanYears * 12
+              const emi = monthlyRate > 0
+                ? (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, totalMonths)) / (Math.pow(1 + monthlyRate, totalMonths) - 1)
+                : loanAmount / totalMonths
+
+              // Capital Appreciation (estimated 12% CAGR for luxury)
+              const cagr = 12
+              const projections = [3, 5, 7, 10]
+              const futureValues = projections.map(yr => ({
+                year: yr,
+                value: basePriceCr * Math.pow(1 + cagr / 100, yr),
+                gain: basePriceCr * Math.pow(1 + cagr / 100, yr) - basePriceCr,
+              }))
+
+              // Rental Yield
+              const annualRentalYield = 3.2 // percent
+              const monthlyRental = (basePriceRs * annualRentalYield / 100) / 12
+
+              const formatCurrency = (val: number) => {
+                if (val >= 1_00_00_000) return `₹${(val / 1_00_00_000).toFixed(1)} Cr`
+                if (val >= 1_00_000) return `₹${(val / 1_00_000).toFixed(1)} L`
+                return `₹${Math.round(val).toLocaleString('en-IN')}`
+              }
+
+              return (
+                <div className="space-y-8 md:space-y-12 pt-4">
+                  <div className="space-y-3">
+                    <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-zinc-400">Investment Intelligence</p>
+                    <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-zinc-900">Financial Overview</h2>
+                  </div>
+
+                  {/* EMI Calculator */}
+                  <div className="bg-zinc-50 border border-zinc-100 rounded-2xl md:rounded-3xl p-6 md:p-8 space-y-6">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-zinc-900 text-white flex items-center justify-center">
+                          <Calculator size={18} />
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-zinc-900 text-base md:text-lg">EMI Calculator</h3>
+                          <p className="text-[10px] text-zinc-500 font-medium">Adjust the sliders to fit your investment plan</p>
+                        </div>
+                      </div>
+                      <div className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest hidden md:block">Property Value: {property.price}</div>
+                    </div>
+
+                    {/* 2x2 Slider Grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      {/* Loan % Slider */}
+                      <div className="space-y-3 bg-white rounded-xl p-4 border border-zinc-100">
+                        <div className="flex justify-between items-center">
+                          <div className="flex items-center gap-1.5">
+                            <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Loan Amount</p>
+                            <div className="group relative">
+                              <Info size={12} className="text-zinc-300 cursor-help" />
+                              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-zinc-900 text-white text-[10px] font-medium p-3 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50 shadow-xl">
+                                Percentage of the property value you want to finance through a home loan. Most banks offer up to 80–90%.
+                                <div className="absolute top-full left-1/2 -translate-x-1/2 w-2 h-2 bg-zinc-900 rotate-45 -mt-1" />
+                              </div>
+                            </div>
+                          </div>
+                          <p className="text-sm font-bold text-zinc-900">{loanPercent}% <span className="text-zinc-400 font-medium">({formatCurrency(basePriceRs * loanPercent / 100)})</span></p>
+                        </div>
+                        <input
+                          type="range"
+                          min={30}
+                          max={90}
+                          step={5}
+                          value={loanPercent}
+                          onChange={(e) => setLoanPercent(Number(e.target.value))}
+                          className="w-full premium-slider"
+                        />
+                        <div className="flex justify-between text-[9px] text-zinc-300 font-bold">
+                          <span>30%</span>
+                          <span>90%</span>
+                        </div>
+                      </div>
+
+                      {/* Tenure Slider */}
+                      <div className="space-y-3 bg-white rounded-xl p-4 border border-zinc-100">
+                        <div className="flex justify-between items-center">
+                          <div className="flex items-center gap-1.5">
+                            <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Loan Tenure</p>
+                            <div className="group relative">
+                              <Info size={12} className="text-zinc-300 cursor-help" />
+                              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-zinc-900 text-white text-[10px] font-medium p-3 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50 shadow-xl">
+                                Duration of the home loan in years. Longer tenure means lower EMI but higher total interest paid.
+                                <div className="absolute top-full left-1/2 -translate-x-1/2 w-2 h-2 bg-zinc-900 rotate-45 -mt-1" />
+                              </div>
+                            </div>
+                          </div>
+                          <p className="text-sm font-bold text-zinc-900">{loanYears} years</p>
+                        </div>
+                        <input
+                          type="range"
+                          min={5}
+                          max={30}
+                          step={1}
+                          value={loanYears}
+                          onChange={(e) => setLoanYears(Number(e.target.value))}
+                          className="w-full premium-slider"
+                        />
+                        <div className="flex justify-between text-[9px] text-zinc-300 font-bold">
+                          <span>5 yrs</span>
+                          <span>30 yrs</span>
+                        </div>
+                      </div>
+
+                      {/* Interest Rate Slider */}
+                      <div className="space-y-3 bg-white rounded-xl p-4 border border-zinc-100">
+                        <div className="flex justify-between items-center">
+                          <div className="flex items-center gap-1.5">
+                            <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Interest Rate</p>
+                            <div className="group relative">
+                              <Info size={12} className="text-zinc-300 cursor-help" />
+                              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-zinc-900 text-white text-[10px] font-medium p-3 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50 shadow-xl">
+                                Annual interest rate offered by your bank. Current home loan rates in India range from 8.25% to 9.5% for luxury properties.
+                                <div className="absolute top-full left-1/2 -translate-x-1/2 w-2 h-2 bg-zinc-900 rotate-45 -mt-1" />
+                              </div>
+                            </div>
+                          </div>
+                          <p className="text-sm font-bold text-zinc-900">{interestRate}% <span className="text-zinc-400 font-medium">p.a.</span></p>
+                        </div>
+                        <input
+                          type="range"
+                          min={6}
+                          max={12}
+                          step={0.25}
+                          value={interestRate}
+                          onChange={(e) => setInterestRate(Number(e.target.value))}
+                          className="w-full premium-slider"
+                        />
+                        <div className="flex justify-between text-[9px] text-zinc-300 font-bold">
+                          <span>6%</span>
+                          <span>12%</span>
+                        </div>
+                      </div>
+
+                      {/* Down Payment Slider */}
+                      <div className="space-y-3 bg-white rounded-xl p-4 border border-zinc-100">
+                        <div className="flex justify-between items-center">
+                          <div className="flex items-center gap-1.5">
+                            <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Down Payment</p>
+                            <div className="group relative">
+                              <Info size={12} className="text-zinc-300 cursor-help" />
+                              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-zinc-900 text-white text-[10px] font-medium p-3 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50 shadow-xl">
+                                The upfront amount you pay from your own funds. Adjusting this will update the loan percentage accordingly.
+                                <div className="absolute top-full left-1/2 -translate-x-1/2 w-2 h-2 bg-zinc-900 rotate-45 -mt-1" />
+                              </div>
+                            </div>
+                          </div>
+                          <p className="text-sm font-bold text-zinc-900">{100 - loanPercent}% <span className="text-zinc-400 font-medium">({formatCurrency(downPayment)})</span></p>
+                        </div>
+                        <input
+                          type="range"
+                          min={10}
+                          max={70}
+                          step={5}
+                          value={100 - loanPercent}
+                          onChange={(e) => setLoanPercent(100 - Number(e.target.value))}
+                          className="w-full premium-slider"
+                        />
+                        <div className="flex justify-between text-[9px] text-zinc-300 font-bold">
+                          <span>10%</span>
+                          <span>70%</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* EMI Result — Full Width */}
+                    <div className="bg-zinc-900 text-white rounded-xl md:rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                      <div>
+                        <p className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-1">Your Estimated EMI</p>
+                        <p className="text-3xl md:text-4xl font-bold tracking-tight">{formatCurrency(emi)}<span className="text-sm font-medium text-white/40 ml-1">/month</span></p>
+                      </div>
+                      <div className="flex gap-6 text-[10px] text-white/50 font-medium">
+                        <div>
+                          <p className="text-white/30 mb-0.5">Total Payable</p>
+                          <p className="text-white font-bold text-sm">{formatCurrency(emi * totalMonths)}</p>
+                        </div>
+                        <div className="w-px h-8 bg-white/10" />
+                        <div>
+                          <p className="text-white/30 mb-0.5">Total Interest</p>
+                          <p className="text-white font-bold text-sm">{formatCurrency(emi * totalMonths - loanAmount)}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Capital Appreciation + Rental Yield side-by-side */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Capital Appreciation */}
+                    <div className="bg-zinc-50 border border-zinc-100 rounded-2xl md:rounded-3xl p-6 md:p-8 space-y-6">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-zinc-900 text-white flex items-center justify-center">
+                          <TrendingUp size={18} />
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-zinc-900">Capital Appreciation</h3>
+                          <p className="text-[10px] text-zinc-500 font-medium">Projected growth at {cagr}% CAGR</p>
+                        </div>
+                      </div>
+
+                      <div className="space-y-3">
+                        {futureValues.map((fv) => {
+                          const growthPercent = ((fv.value - basePriceCr) / basePriceCr) * 100
+                          const barWidth = Math.min(100, (fv.value / futureValues[futureValues.length - 1].value) * 100)
+                          return (
+                            <div key={fv.year} className="space-y-1.5">
+                              <div className="flex justify-between items-baseline">
+                                <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">{fv.year} Years</p>
+                                <div className="text-right">
+                                  <span className="text-sm font-bold text-zinc-900">₹{fv.value.toFixed(1)} Cr</span>
+                                  <span className="text-[10px] text-zinc-400 ml-2">+{growthPercent.toFixed(0)}%</span>
+                                </div>
+                              </div>
+                              <div className="h-2 bg-zinc-200 rounded-full overflow-hidden">
+                                <motion.div
+                                  initial={{ width: 0 }}
+                                  whileInView={{ width: `${barWidth}%` }}
+                                  viewport={{ once: true }}
+                                  transition={{ duration: 1, delay: 0.2 }}
+                                  className="h-full bg-zinc-900 rounded-full"
+                                />
+                              </div>
+                            </div>
+                          )
+                        })}
+                      </div>
+
+                      <p className="text-[9px] text-zinc-400 font-medium italic">* Based on historical luxury real estate CAGR. Actual returns may vary.</p>
+                    </div>
+
+                    {/* Rental Yield */}
+                    <div className="bg-zinc-900 text-white rounded-2xl md:rounded-3xl p-6 md:p-8 space-y-6 flex flex-col">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                          <IndianRupee size={18} />
+                        </div>
+                        <div>
+                          <h3 className="font-bold">Rental Income Potential</h3>
+                          <p className="text-[10px] text-white/50 font-medium">Estimated at {annualRentalYield}% gross yield</p>
+                        </div>
+                      </div>
+
+                      <div className="flex-1 flex flex-col justify-center space-y-6">
+                        <div>
+                          <p className="text-[9px] font-bold uppercase tracking-widest text-white/40 mb-1">Monthly Rental Income</p>
+                          <p className="text-3xl md:text-4xl font-bold tracking-tight">{formatCurrency(monthlyRental)}<span className="text-sm font-medium text-white/40">/mo</span></p>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+                            <p className="text-[9px] font-bold uppercase tracking-widest text-white/40 mb-1">Annual Income</p>
+                            <p className="text-lg font-bold">{formatCurrency(monthlyRental * 12)}</p>
+                          </div>
+                          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+                            <p className="text-[9px] font-bold uppercase tracking-widest text-white/40 mb-1">Gross Yield</p>
+                            <p className="text-lg font-bold">{annualRentalYield}%</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="pt-4 border-t border-white/10">
+                        <p className="text-[10px] text-white/40 font-medium">
+                          Combined ROI (Rental + Appreciation) ≈ <span className="text-white font-bold">{(annualRentalYield + cagr).toFixed(1)}% p.a.</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )
+            })()}
           </div>
 
           {/* Sidebar / CTA */}
