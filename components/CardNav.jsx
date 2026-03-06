@@ -19,7 +19,6 @@ const CardNav = ({
   buttonLabel = 'Schedule a Visit',
   onButtonClick,
   rightContent,
-  onLinkClick,
 }) => {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
