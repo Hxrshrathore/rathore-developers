@@ -24,14 +24,14 @@ export function Navbar() {
 
   if (pathname === '/login' || pathname === '/dashboard') return null
 
-  // Improved sticky nav styling
-  const navClasses = isScrolled 
-    ? "bg-zinc-950/80 backdrop-blur-2xl border-b border-white/5 py-3 shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
-    : "bg-transparent border-b border-transparent py-6"
+  // Determine if the navbar needs dark text based on the route and scroll position
+  // The homepage relies on white text early on, whereas other pages start with a white bg.
+  const isLightMode = !isScrolled && pathname !== '/'
 
-  const buttonClasses = isScrolled
-    ? "bg-primary text-white hover:bg-primary-hover shadow-lg shadow-primary/20"
-    : "bg-white text-black hover:bg-zinc-200"
+  // Minimal and clean sticky nav styling
+  const navClasses = isScrolled 
+    ? "bg-zinc-950/95 backdrop-blur-2xl border-b border-white/5 py-3 shadow-md"
+    : "bg-transparent border-b border-transparent py-5"
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -45,9 +45,9 @@ export function Navbar() {
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${navClasses}`}>
         <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
           <Link href="/" className="flex items-center group">
-            <span className="text-2xl font-bold tracking-tighter text-white">
+            <span className={`text-xl font-bold tracking-tighter transition-colors duration-300 ${isLightMode ? 'text-zinc-950' : 'text-white'}`}>
               {siteConfig.name.split(' ')[0]}
-              <span className="text-primary italic group-hover:text-white transition-colors">.</span>
+              <span className="text-primary italic opacity-0 group-hover:opacity-100 transition-opacity">.</span>
             </span>
           </Link>
 
@@ -59,10 +59,14 @@ export function Navbar() {
                 <Link 
                   key={link.name}
                   href={link.href} 
-                  className="relative text-[10px] font-black tracking-[0.2em] uppercase text-white/70 hover:text-white transition-colors group py-2"
+                  className={`relative text-[10px] font-bold tracking-[0.2em] uppercase py-2 transition-colors duration-300 group ${
+                    isLightMode 
+                      ? (isActive ? 'text-zinc-900' : 'text-zinc-500 hover:text-zinc-900')
+                      : (isActive ? 'text-white' : 'text-white/60 hover:text-white')
+                  }`}
                 >
                   {link.name}
-                  <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500 ${isActive ? 'scale-x-100' : ''}`} />
+                  <span className={`absolute bottom-0 left-0 w-full h-[1px] scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500 ${isLightMode ? 'bg-zinc-900' : 'bg-white'} ${isActive ? 'scale-x-100' : ''}`} />
                 </Link>
               )
             })}
@@ -71,15 +75,19 @@ export function Navbar() {
           <div className="hidden lg:flex items-center gap-6">
             <Link 
               href="/login" 
-              className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-white/50 hover:text-white transition-colors"
+              className={`flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300 ${isLightMode ? 'text-zinc-500 hover:text-zinc-900' : 'text-white/60 hover:text-white'}`}
             >
               <User size={14} />
               Client Portal
             </Link>
-            <div className="w-px h-4 bg-white/20" />
+            <div className={`w-px h-3 transition-colors duration-300 ${isLightMode ? 'bg-zinc-300' : 'bg-white/20'}`} />
             <button 
               onClick={() => setIsModalOpen(true)}
-              className={`px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-500 ${buttonClasses}`}
+              className={`px-6 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-300 ${
+                isLightMode 
+                  ? 'bg-zinc-900 text-white hover:bg-zinc-800'
+                  : (isScrolled ? 'bg-white text-zinc-950 hover:bg-zinc-200' : 'bg-white/10 text-white hover:bg-white/20 backdrop-blur-md')
+              }`}
             >
               Schedule a Visit
             </button>
@@ -87,10 +95,14 @@ export function Navbar() {
 
           {/* Mobile Toggle */}
           <button 
-            className="lg:hidden w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white border border-white/10" 
+            className={`lg:hidden w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300 border ${
+              isLightMode 
+                ? 'bg-zinc-100 text-zinc-900 border-zinc-200' 
+                : 'bg-white/10 backdrop-blur-md text-white border-white/10'
+            }`} 
             onClick={() => setIsOpen(!isOpen)}
           >
-            {isOpen ? <X size={18} /> : <Menu size={18} />}
+            {isOpen ? <X size={16} /> : <Menu size={16} />}
           </button>
         </div>
 
