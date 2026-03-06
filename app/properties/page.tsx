@@ -6,12 +6,20 @@ import Image from "next/image"
 import { MapPin, Home, Maximize, ArrowRight, Filter, Search, ChevronDown } from "lucide-react"
 import { properties } from "@/lib/properties"
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 
 const categories = ["All", "High-Rise", "Waterfront", "Sustainable", "Lofts"]
 
 export default function PropertiesPage() {
+  const searchParams = useSearchParams()
+  const cityParam = searchParams.get('city') || ''
   const [activeCategory, setActiveCategory] = React.useState("All")
-  const [searchQuery, setSearchQuery] = React.useState("")
+  const [searchQuery, setSearchQuery] = React.useState(cityParam)
+
+  // Sync with URL city param
+  React.useEffect(() => {
+    if (cityParam) setSearchQuery(cityParam)
+  }, [cityParam])
 
   const filteredProperties = properties.filter(prop => {
     const matchesCategory = activeCategory === "All" || prop.category === activeCategory

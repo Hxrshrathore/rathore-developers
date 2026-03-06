@@ -1,7 +1,8 @@
 export const siteConfig = {
   name: "Rathore Developers",
   slogan: "Iconic Living",
-  description: "Premium real estate developer specializing in modern, sustainable, and luxury residential projects.",
+  url: "https://rathoredevelopers.com",
+  description: "Premium real estate developer specializing in modern, sustainable, and luxury residential projects across Mumbai, Delhi NCR, and Goa. Discover iconic residences starting from ₹8.2 Cr.",
   contact: {
     email: "information@rathoredevelopers.com",
     phone: "+91 98765 43210",
@@ -20,108 +21,59 @@ export const siteConfig = {
   established: 2008,
 
   // ─── Mega Navigation ───
+  // 3 cards aligned to buyer journey: Discover → Trust → Convert
   navigation: [
     {
-      label: "Who We Are",
-      href: "/about",
-      sections: [
-        {
-          title: "Philosophy",
-          links: [
-            { label: "Our Philosophy", href: "/about/philosophy" },
-            { label: "Passion at Work", href: "/about/philosophy#passion" },
-            { label: "The Rathore Way", href: "/about/philosophy#the-way" },
-            { label: "Vision & Mission", href: "/about/vision" },
-          ],
-        },
-        {
-          title: "Leadership",
-          links: [
-            { label: "About our Founder", href: "/about/leadership#founder" },
-            { label: "Chairman's Message", href: "/about/leadership#chairman" },
-            { label: "Board of Directors", href: "/about/leadership#board" },
-            { label: "Leadership Team", href: "/about/leadership" },
-          ],
-        },
-        {
-          title: "Showcase",
-          links: [
-            { label: "The Rathore Journey", href: "/about/journey" },
-            { label: "Awards & Honours", href: "/about/awards" },
-          ],
-        },
-      ],
-    },
-    {
-      label: "What We Do",
+      label: "Residences",
       href: "/properties",
       sections: [
         {
-          title: "Residential",
+          title: "Explore",
           links: [
+            { label: "All Properties", href: "/properties" },
             { label: "Mumbai", href: "/properties?city=mumbai" },
             { label: "Delhi NCR", href: "/properties?city=delhi" },
             { label: "Goa", href: "/properties?city=goa" },
-            { label: "Gurgaon", href: "/properties?city=gurgaon" },
-            { label: "View All Properties", href: "/properties" },
-          ],
-        },
-        {
-          title: "Commercial",
-          links: [
-            { label: "Rathore City Mall", href: "/commercial" },
-            { label: "1 Rathore", href: "/commercial#1-rathore" },
-          ],
-        },
-        {
-          title: "Services",
-          links: [
-            { label: "Contracting", href: "/developments" },
-            { label: "Business Services", href: "/developments#services" },
           ],
         },
       ],
     },
     {
-      label: "Portfolio",
-      href: "/portfolio",
+      label: "Our Story",
+      href: "/about",
       sections: [
         {
-          title: "Projects",
+          title: "Know Us",
           links: [
-            { label: "Client Testimonials", href: "/portfolio#testimonials" },
-            { label: "Completed Projects", href: "/portfolio#completed" },
-            { label: "Ongoing Developments", href: "/developments" },
-          ],
-        },
-        {
-          title: "Rathore Interiors",
-          links: [
-            { label: "Interior Design", href: "/portfolio#interiors" },
-            { label: "Glazing & Metal Works", href: "/portfolio#glazing" },
-            { label: "Concrete Products", href: "/portfolio#concrete" },
+            { label: "About Rathore", href: "/about" },
+            { label: "Vision & Mission", href: "/about#vision" },
+            { label: "Leadership", href: "/about#leadership" },
+            { label: "Awards", href: "/about#awards" },
           ],
         },
       ],
     },
     {
-      label: "Contact Us",
+      label: "Connect",
       href: "/contact",
-      sections: [],
-    },
-    {
-      label: "Blog",
-      href: "/blog",
-      sections: [],
+      sections: [
+        {
+          title: "Get in Touch",
+          links: [
+            { label: "Contact Us", href: "/contact" },
+            { label: "Ongoing Developments", href: "/developments" },
+            { label: "Careers", href: "/careers" },
+            { label: "Blog & Insights", href: "/blog" },
+          ],
+        },
+      ],
     },
   ],
 
-  // ─── Secondary Navigation (top-right utility links) ───
+  // ─── Secondary Navigation (minimal — rest goes to footer) ───
   secondaryNav: [
     { label: "Careers", href: "/careers" },
-    { label: "Media Centre", href: "/blog" },
-    { label: "Sustainability", href: "/sustainability" },
-    { label: "Investor Relations", href: "/about#investors" },
-    { label: "Rathore Privilege", href: "/login" },
+    { label: "Client Portal", href: "/login" },
   ],
 }
+
