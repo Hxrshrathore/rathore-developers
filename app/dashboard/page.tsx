@@ -418,7 +418,7 @@ export default function DashboardPage() {
           <div className="flex items-center gap-6">
             <button className="relative p-2 text-zinc-500 hover:text-black transition-colors">
               <Bell size={20} />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-primary rounded-full border-2 border-white" />
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-zinc-900 rounded-full border-2 border-white" />
             </button>
             <div className="h-8 w-px bg-zinc-200" />
             <div className="flex items-center gap-3">
