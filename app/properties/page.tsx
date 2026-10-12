@@ -10,7 +10,7 @@ import { useSearchParams } from "next/navigation"
 
 const categories = ["All", "High-Rise", "Waterfront", "Sustainable", "Lofts"]
 
-export default function PropertiesPage() {
+function PropertiesContent() {
   const searchParams = useSearchParams()
   const cityParam = searchParams.get('city') || ''
   const [activeCategory, setActiveCategory] = React.useState("All")
@@ -170,5 +170,22 @@ export default function PropertiesPage() {
         )}
       </section>
     </main>
+  )
+}
+
+export default function PropertiesPage() {
+  return (
+    <React.Suspense
+      fallback={
+        <main className="pt-32 pb-24 px-6 max-w-7xl mx-auto min-h-screen">
+          <div className="animate-pulse space-y-8">
+            <div className="h-12 bg-zinc-100 rounded-2xl w-1/3" />
+            <div className="h-16 bg-zinc-100 rounded-2xl w-full" />
+          </div>
+        </main>
+      }
+    >
+      <PropertiesContent />
+    </React.Suspense>
   )
 }
