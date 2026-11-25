@@ -257,27 +257,3 @@ Concept Design & Development by [**hxrshrathore**](https://hxrshrathore.vercel.a
 **Rathore Developers — Iconic Living 🏛️ (Design Prototype)**
 
 </div>
-<<<<<<< HEAD
-=======
-
-# Run and deploy your AI Studio app
-
-This contains everything you need to run your app locally.
-
-View your app in AI Studio: https://ai.studio/apps/3a5358c2-6a21-4f58-8958-afee44538547
-
-## Run Locally
-
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
-
-
-https://github.com/user-attachments/assets/9f5465ac-4033-4795-bed8-4728c4d7fcb7
-
->>>>>>> 24d4ee3875b305d72e5228fc16ec629770bb63c0
